@@ -1,33 +1,28 @@
-// ConsoleApplication42.cpp : ¶¨Òå¿ØÖÆÌ¨Ó¦ÓÃ³ÌĞòµÄÈë¿Úµã¡£
+// teachersstrstr.cpp : å®šä¹‰æ§åˆ¶å°åº”ç”¨ç¨‹åºçš„å…¥å£ç‚¹ã€‚
 //
 
 #include "stdafx.h"
 #include<iostream>
 
-//·µ»ØÕÒµ½×Ö·ûÖ¸Õë
+//è¿”å›æ‰¾åˆ°å­—ç¬¦æŒ‡é’ˆ
 char*mystrstr(char*src, char*des)
 {
 	char *pSrc = src;
-	//±éÀúsrc
-	while(*pSrc)//·Ç0 true
+	//éå†src
+	while(*pSrc)//é0 true
 	{
-		char*pSrctemp=pSrc;//srcÖĞ±È½Ï¶ÎÖĞµÄµÚÒ»¸ö
-		//±éÀúdes ±È½Ï
+		char*pSrctemp=pSrc;//srcä¸­æ¯”è¾ƒæ®µä¸­çš„ç¬¬ä¸€ä¸ª
+		//éå†des æ¯”è¾ƒ
 		char*pDes = des;
 		while (*pDes++ == *pSrctemp++)
 		{
-			{
-
-			}
 			//pSrctemp++;
 			//pDes++;
-			if (*pDes == 0)//Ä¿±ê×Ö·û´®½áÊø
+			if (*pDes == 0)//ç›®æ ‡å­—ç¬¦ä¸²ç»“æŸ
 				return pSrc;
-
 		}
-		pSrc++;//Ö¸ÏòÏÂÒ»¸ö
+		pSrc++;//æŒ‡å‘ä¸‹ä¸€ä¸ª
 	}
-
 	return NULL;
 }
 
