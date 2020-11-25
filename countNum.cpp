@@ -8,7 +8,7 @@ using namespace std;
 int main()
 {
 	int n,k;
-	cout << "please input people numker n:";
+	cout << "please input people number n:";
 	cin >> n;
 	cout << "please input the count number k:";
 	cin >> k;
