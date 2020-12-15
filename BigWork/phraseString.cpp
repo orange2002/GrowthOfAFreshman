@@ -4,11 +4,12 @@
 #include <iostream>
 using namespace std;
 
-const int AllWord=400;//400测试，正式31851
+const int AllWordNum=31851;//400测试，正式31851
 const int MaxString = 28;//只许州官放火，不许百姓点灯\n\0
 
 int main()
 {
+    cout << "少女祈祷中 now loading...\n";
     //读入成语----------------------------------------
     FILE* fp;
     fopen_s(&fp, "e:\\repo\\cy.txt", "r");
@@ -18,10 +19,10 @@ int main()
         return 0;
     }
     
-    char (*str)[MaxString]=new char[AllWord][MaxString];
-    int strLen[AllWord];
-    int i=0,j=0,k=0;
-    for (i = 0; i < AllWord; i++) 
+    char (*str)[MaxString]=new char[AllWordNum][MaxString];
+    int* strLen=new int[AllWordNum];
+    int i=0,j=0,k=0,t=0,u=0;
+    for (i = 0; i < AllWordNum; i++) 
     {
         fgets(str[i], MaxString, fp);
         strLen[i] = strlen(str[i])-1;
@@ -32,8 +33,9 @@ int main()
     //核心功能区---------------------------------------
     int inputNum;
     int inputwordLen;
-
-    char wordtemp[28];
+    int tempph;
+    char wordtemp[MaxString];
+    cout << "initialization is complete\n";
 mode0:
     cout << "select mode\n";
     cin >> inputNum;
@@ -51,7 +53,7 @@ mode0:
         goto mode3;
     default:
         cout << "error";
-        goto mode1;
+        goto mode0;
     }
 
 mode1:
@@ -66,7 +68,7 @@ mode1:
         cout << "error\n";
         goto mode1;
     }
-    for (i = 0; i < AllWord; i++)
+    for (i = 0; i < AllWordNum; i++)
     {
         for (j = 0; j < inputwordLen; j += 2)
         {
@@ -80,7 +82,7 @@ mode1:
             if (k == strLen[i])
                 break;
             if (j == inputwordLen - 2)
-                cout << str[i];
+                cout << str[i]<<"\n";
             
         }
     }
@@ -91,39 +93,45 @@ mode2:
     cout << "toss a coin... ";
     if(rand() % 2 ==0){
         cout << "it's computer's turn\n";
-        strcpy_s(wordtemp,str[rand()% AllWord]);
+        strcpy_s(wordtemp,str[rand()% AllWordNum]);
         cout << wordtemp<<endl;
     }
     else {
         wordtemp[0] = '0';
         wordtemp[1] = '0';
+        wordtemp[2] = '\0';
     }
-    while (wordtemp[0] != '0')
-    {
-        int lentemp;
-        lentemp = strlen(wordtemp);
-    }
+    
+    int lentemp;
+    lentemp = strlen(wordtemp);
     cout << "it's your turn ";
-    cout << "please input a phrase\n";
+    int inttemp[500];
+
+    cout << "please input a idiom\n";
+mode2a:
     cin >> inputWord;
     if (strcmp(inputWord, "0") == 0)
         goto mode0;
     inputwordLen = strlen(inputWord);
-
-    int inttemp[1000];
-    int n; 
-    n= 0;
-    for (i = 0; i < AllWord; i++)
-    {
-        if (strcmp(str[i], inputWord) == 0)break;
-        if (i== AllWord - 1) 
+    if (wordtemp[0] != '0') {
+        if (wordtemp[lentemp - 2] != inputWord[0] || wordtemp[lentemp - 1] != inputWord[1])
         {
-            cout << "what you input is not a phrase, you lose\n\n";
-            goto mode2;
-
+            cout<<"not match, please retry";
+            goto mode2a;
         }
     }
-    for (i = 0; i < AllWord; i++)
+    int n; 
+    n= 0;
+    for (i = 0; i < AllWordNum; i++)
+    {
+        if (strcmp(str[i], inputWord) == 0)break;
+        if (i== AllWordNum - 1) 
+        {
+            cout << "what you input is not a idiom, please retry";
+            goto mode2a;
+         }
+    }
+    for (i = 0; i < AllWordNum; i++)
     {
         if ((str[i][0] == inputWord[inputwordLen - 2]) && (str[i][1] == inputWord[inputwordLen - 1]))
         {
@@ -138,22 +146,83 @@ mode2:
     }
     
     strcpy_s(wordtemp, str[inttemp[rand() % n]]);
-    cout << wordtemp <<"\ncontinue ";
-    goto mode2;
+    cout<<"it's computer's turn,the idiom is\n" << wordtemp <<"\nit's your turn, please input a idiom\n";
+    goto mode2a;
 
 mode3:
-    ;
+    char strPh[2][MaxString];
+    int intPh[2][500];
+
+    cout<<"please input the first idiom\n";
+    cin >> strPh[0];
+    if (strcmp(strPh[0], "0") == 0)
+        goto mode0;
+    int lenPh;
+    lenPh = strlen(strPh[0]);
+    cout << "please input the second idiom\n";
+    cin>> strPh[1];
+    if (strcmp(strPh[1], "0") == 0)
+        goto mode0;
+    j = 0; k = 0;
+    for(i=0;i<AllWordNum;i++)
+    { 
+        if (str[i][0] == strPh[0][lenPh - 2] && str[i][1] == strPh[0][lenPh - 1]) { intPh[0][j] = i; j += 1; }//前
+        if (str[i][strLen[i] - 2] == strPh[1][0]&& str[i][strLen[i] - 1] == strPh[1][1]) { intPh[1][k] = i; k += 1; }//后
+    }
+    //i,t,u无实意，j,k记录个数
+    if(j==0||k==0)
+    {
+        cout << "find nothing\n";
+    }
+    for (i = 0; i < k; i++)
+    {
+        for (t = 0; t < j; t++)
+        {
+            
+            tempph = strlen(str[intPh[0][t]]);
+            if(strcmp(str[intPh[0][t]], str[intPh[1][i]])==0)
+            {
+                cout << str[intPh[0][t]]  << "\n";
+                goto mode3;
+            }//中间1个
+
+            if (str[intPh[0][t]][tempph - 2] == str[intPh[1][i]][0] && str[intPh[0][t]][tempph - 1] == str[intPh[1][i]][1])
+            {
+                cout << str[intPh[0][t]] << " " << str[intPh[1][i]] << "\n";
+                goto mode3;
+            }//中间2个
+        }
+    }
+    
+    for (i = 0; i < k; i++)
+    {
+        for (t = 0; t < j; t++)
+        {
+            for (u = 0; u < AllWordNum; u++)
+            {
+                tempph = strlen(str[intPh[0][t]]);
+                if (str[intPh[0][t]][tempph - 2] == str[u][0] && str[intPh[0][t]][tempph - 1] == str[u][1])
+                {
+                    if (str[u][strLen[u] - 2] == str[intPh[1][i]][0] && str[u][strLen[u]] == str[intPh[1][i]][1])
+                    {
+                        cout << str[intPh[0][t]] << " " << str[u] <<" "<< str[intPh[1][i]] << "\n";
+                        goto mode3;
+                    }
+                }
+            }
+        }
+    }
+
+    cout << "find nothing\n\n";
+    goto mode3;
 
 modeend:
 
-    delete[] str;
+    delete[]str;
+    delete[]strLen;
     return 0;
-
-
-
-
-   
-}
+    
+ }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
 // 调试程序: F5 或调试 >“开始调试”菜单
