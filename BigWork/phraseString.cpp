@@ -5,11 +5,11 @@
 using namespace std;
 
 const int AllWordNum=31851;//400测试，正式31851
-const int MaxString = 28;//只许州官放火，不许百姓点灯\n\0
+const int MaxString = 32;//各人自扫门前雪，莫管他人瓦上霜\n\0
 
 int main()
 {
-    cout << "少女祈祷中 now loading...\n";
+    cout << "now loading...\n";
     //读入成语----------------------------------------
     FILE* fp;
     fopen_s(&fp, "e:\\repo\\cy.txt", "r");
@@ -64,6 +64,7 @@ mode1:
         goto mode0;
     inputwordLen = strlen(inputWord);
     if (inputwordLen >= MaxString)
+
     {
         cout << "error\n";
         goto mode1;
@@ -82,7 +83,7 @@ mode1:
             if (k == strLen[i])
                 break;
             if (j == inputwordLen - 2)
-                cout << str[i]<<"\n";
+                cout << str[i]<<"   "<<i<<"\n";
             
         }
     }
