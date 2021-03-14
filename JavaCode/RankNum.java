@@ -28,5 +28,6 @@ public class RankNum
         }
         System.out.print(num[0]);
         for (i=1;i<allnum;i++)System.out.print(" "+num[i]);
+        in.close();
      }
 }
