@@ -50,6 +50,7 @@ public class GpaPro
         System.out.printf("%.2f",sumgrade/sumcredit);
         System.out.println();
         System.out.printf("%.2f",sumpoint/sumcredit);
-
+        in.close();
     }
+    
 }

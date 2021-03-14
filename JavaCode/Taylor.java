@@ -16,6 +16,6 @@ public class Taylor
              sum+=a;
          }
          System.out.println(sum);
-
+        in.close();
     }
 }

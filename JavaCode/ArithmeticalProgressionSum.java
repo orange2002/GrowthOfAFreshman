@@ -16,6 +16,7 @@ public class ArithmeticalProgressionSum
 	    int n=in.nextInt();
 	    float s=0;
 	    for (int i=0;i<n;i++)s+=a+i*d;
-	    System.out.println(s);
+		System.out.println(s);
+		in.close();
     }
 }
